@@ -1,0 +1,23 @@
+.contact {
+    display: flex;
+    justify-content: space-around;
+}
+
+    .contact img {
+        height: 40px;
+        width: 40px;
+    }
+
+.contact__1 {
+    text-align: left;
+}
+
+.contact__2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+    .contact__2 a {
+        padding: 0 10px;
+    }

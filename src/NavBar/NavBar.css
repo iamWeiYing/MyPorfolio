@@ -1,0 +1,60 @@
+.nav-bar {
+    background-color: #176141;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.nav-icon {
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+}
+
+    .nav-icon img {
+        height: 40px;
+        width: 40px;
+    }
+
+    .nav-icon:link {
+        text-decoration: none;
+        color: white;
+    }
+
+    .nav-icon:visited {
+        text-decoration: none;
+        color: white;
+    }
+
+    .nav-icon:hover {
+        text-decoration: none;
+        color: white;
+    }
+
+    .nav-icon:active {
+        text-decoration: none;
+        color: white;
+    }
+
+.nav-btn-group {
+    padding-right: 40px;
+    display: inline-flex;
+    align-items: center;
+}
+
+    .nav-btn-group button {
+        margin-left: 20px;
+    }
+
+.ant-anchor-link {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.ant-anchor-link-title {
+    padding: 0 3px;
+}

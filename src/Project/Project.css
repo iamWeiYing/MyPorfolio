@@ -1,0 +1,61 @@
+.project__container {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.project .ant-card {
+    width: 300px;
+    margin: 0 auto 15px;
+    background-image: url('https://4kwallpapers.com/images/wallpapers/dark-background-abstract-background-network-3d-background-3440x1440-8324.png');
+    background-size: cover;
+    background-position: center;
+}
+
+    .project .ant-card img {
+        height: 160px;
+        object-fit: contain;
+        background-color: rgba(120, 120, 120, 0.7);
+    }
+
+.project .ant-card-head-title {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.project .ant-card-body div {
+    padding-bottom: 40px;
+}
+
+.project .ant-card-body p {
+    height: 100px;
+    text-align: justify;
+    font-size: 15px;
+    font-weight: 400;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+    .project .ant-card-body p::-webkit-scrollbar {
+        display: none;
+    }
+
+.project .ant-card-body .button {
+    float: right;
+    font-weight: 500;
+    position: absolute;
+    bottom: 10px; /* Adjust this value as needed */
+    right: 10px; /* Adjust this value as needed */
+}
+
+.project .ant-card-body > * {
+    margin: 5px 0;
+}
+
+@media screen and (max-width: 930px) {
+    .project__container {
+        display: unset;
+        justify-content: unset;
+    }
+}

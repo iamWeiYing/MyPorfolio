@@ -1,0 +1,58 @@
+.about {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.about-image {
+    margin: 30px;
+    object-fit: contain;
+}
+
+    .about-image img {
+        border-radius: 2rem;
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+        .about-image img:hover {
+            box-shadow: 0 0 11px #00ff77;
+        }
+
+.about-content div {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+    .about-content div article {
+        border: 1px solid white;
+        border-radius: 1rem;
+        padding: 2rem;
+        background-color: rgba(0,0,0,0.2);
+    }
+        .about-content div article:hover {
+            border: 1px solid #4096ff;
+            color: #4096ff;
+        }
+
+.about-content p {
+    text-align: justify;
+}
+
+.about-content .button {
+    margin: 15px;
+    font-weight: 500;
+}
+
+@media screen and (max-width: 930px) {
+    .about {
+        display: unset;
+        justify-content: unset;
+    }
+
+    .about-image {
+        margin: auto;
+    }
+}
