@@ -121,13 +121,12 @@ function ProjectEdit() {
         }
     };
 
-    const handleUpload = (e) => {
-        e.preventDefault();
+    const handleUpload = async (value) => {
         const formData = new FormData();
-        formData.append("file", uploadFile);
+        formData.append("file", value);
         formData.append("upload_preset", "hloqrnca");
 
-        axios.post(
+        await axios.post(
             "https://api.cloudinary.com/v1_1/dbpphzhoy/image/upload",
             formData
         )
@@ -193,9 +192,8 @@ function ProjectEdit() {
                             <Form.Item label="Image" key='data_image'>
                                 <div className='upload_image'>
                                     <input type="file"
-                                        onChange={(event) => { setUploadFile(event.target.files[0]); }}
+                                        onChange={(event) => { handleUpload(event.target.files[0]); }}
                                     />
-                                    <Button onClick={handleUpload}>Upload File</Button>
                                     {editedData && (<img className='img_upload' src={editedData.img_url} />)}
                                 </div>
                             </Form.Item>
