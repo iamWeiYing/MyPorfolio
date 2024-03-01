@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Spin, Modal, Form, Input, Button } from 'antd';
 import axios from 'axios';
+import { CheckCircleOutlined } from '@ant-design/icons';
 import './AdminPage.css';
 const { TextArea } = Input;
 
@@ -30,17 +31,36 @@ function ProjectEdit() {
                 <span>
                     <a href="#" onClick={() => handleEdit(record)}>Edit</a>
                     <span style={{ margin: '0 8px' }}>|</span>
-                    <a href="#" onClick={() => handleDelete(record.id)}>Delete</a>
+                    <a href="#" onClick={() => confirmDelete(record.id)}>Delete</a>
                 </span>
             ),
         },
     ];
 
+    const [modal, contextHolder] = Modal.useModal();
+    const confirmAction = () => {
+        modal.confirm({
+            title: 'Confirm',
+            centered: true,
+            icon: <CheckCircleOutlined style={{ color: '#00ff00' }} />,
+            content: 'Do you accept to do this action?',
+            onOk: handleSaveEdit,
+        });
+    };
+    const confirmDelete = (id) => {
+        modal.confirm({
+            title: 'Confirm',
+            centered: true,
+            icon: <CheckCircleOutlined style={{ color: '#00ff00' }} />,
+            content: 'Do you want to delete this project?',
+            onOk: () => { handleDelete(id) },
+        })
+    }
+
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [editModalVisible, setEditModalVisible] = useState(false);
     const [editedData, setEditedData] = useState(null);
-    const [uploadFile, setUploadFile] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -141,6 +161,7 @@ function ProjectEdit() {
 
     return (
         <div>
+            {contextHolder}
             <Button className='nav-btn' type="primary" onClick={() => handleAdd()}>
                 Add New
             </Button>
@@ -157,8 +178,8 @@ function ProjectEdit() {
                     <Modal
                         title="Project"
                         open={editModalVisible}
-                        width='70vw'
-                        onOk={handleSaveEdit}
+                            width='70vw'
+                            onOk={confirmAction}
                         onCancel={handleCancelEdit}
                     >
                         <Form

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Select, Table, Spin, Modal, Typography } from 'antd';
 import dayjs from 'dayjs';
 import axios from 'axios';
+import { CheckCircleOutlined } from '@ant-design/icons';
 import { QuillEditor } from './QuillEditor';
 import './AdminPage.css';
 
@@ -75,11 +76,31 @@ function BlogEdit() {
                 <span>
                     <a href="#" onClick={() => handleEdit(record)}>Edit</a>
                     <span style={{ margin: '0 8px' }}>|</span>
-                    <a href="#" onClick={() => handleDelete(record.id)}>Delete</a>
+                    <a href="#" onClick={() => confirmDelete(record.id)}>Delete</a>
                 </span>
             ),
         },
     ];
+
+    const [modal, contextHolder] = Modal.useModal();
+    const confirmAction = () => {
+        modal.confirm({
+            title: 'Confirm',
+            centered: true,
+            icon: <CheckCircleOutlined style={{ color: '#00ff00' }} />,
+            content: 'Do you accept to do this action?',
+            onOk: form.submit,
+        });
+    };
+    const confirmDelete = (id) => {
+        modal.confirm({
+            title: 'Confirm',
+            centered: true,
+            icon: <CheckCircleOutlined style={{ color: '#00ff00' }} />,
+            content: 'Do you want to delete this blog?',
+            onOk: () => { handleDelete(id) },
+        })
+    }
 
     const [form] = Form.useForm();
     const userdata = JSON.parse(localStorage.getItem("userdata"));
@@ -179,6 +200,7 @@ function BlogEdit() {
 
     return (
         <div>
+            {contextHolder}
             <Button className='nav-btn' type="primary" onClick={() => handleAdd()}>
                 Add New
             </Button>
@@ -197,7 +219,7 @@ function BlogEdit() {
                         title="Blog Editor"
                         open={editModalVisible}
                         width="70vw"
-                        onOk={form.submit}
+                        onOk={confirmAction}
                         onCancel={handleCancelEdit}
                     >
                         <Form

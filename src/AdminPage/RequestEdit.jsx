@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, Tabs, Select, Table, Spin, Modal, Typography } from 'antd';
 import dayjs from 'dayjs';
 import axios from 'axios';
+import { CheckCircleOutlined } from '@ant-design/icons';
 import './AdminPage.css';
 
 const { Text } = Typography;
@@ -100,11 +101,31 @@ function RequestEdit() {
                 <span>
                     <a href="#" onClick={() => handleDetail(record)}>Detail</a>
                     <span style={{ margin: '0 8px' }}>|</span>
-                    <a href="#" onClick={() => handleDeleteRequest(record.id)}>Delete</a>
+                    <a href="#" onClick={() => confirmDelete(record.id)}>Delete</a>
                 </span>
             ),
         },
     ];
+
+    const [modal, contextHolder] = Modal.useModal();
+    const confirmRequest = () => {
+        modal.confirm({
+            title: 'Confirm',
+            centered: true,
+            icon: <CheckCircleOutlined style={{ color: '#00ff00' }} />,
+            content: 'Do you want to approve this request?',
+            onOk: data.requestType === 'delete' ? handleDelete : handleAddUpdate,
+        });
+    };
+    const confirmDelete = (id) => {
+        modal.confirm({
+            title: 'Confirm',
+            centered: true,
+            icon: <CheckCircleOutlined style={{ color: '#00ff00' }} />,
+            content: 'Do you want to delete this request?',
+            onOk: () => { handleDeleteRequest(id) },
+        })
+    }
 
     const [data, setData] = useState({});
     const [requestData, setRequestData] = useState([]);
@@ -224,6 +245,7 @@ function RequestEdit() {
 
     return (
         <div>
+            {contextHolder}
             {loading ? (
                 <Spin size="large" />
             ) : (
@@ -240,7 +262,7 @@ function RequestEdit() {
                         open={editModalVisible}
                         width="70vw"
                         destroyOnClose="true"
-                        onOk={data.requestType === 'delete' ? handleDelete : handleAddUpdate}
+                        onOk={confirmRequest}
                         onCancel={handleCancelDetail}
                     >
                         <Tabs
