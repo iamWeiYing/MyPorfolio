@@ -4,12 +4,10 @@ import { Button, Tabs } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
 import { Player } from '@lottiefiles/react-lottie-player';
 
-import './AdminPage.css';
-import ProjectEdit from './ProjectEdit.jsx';
+import './UserPage.css';
 import BlogEdit from './BlogEdit';
-import RequestEdit from './RequestEdit';
 
-function AdminPage() {
+function UserPage() {
 
     const navigateTo = useNavigate();
     const isLogedIn = JSON.parse(localStorage.getItem('isLogedIn'));
@@ -24,10 +22,10 @@ function AdminPage() {
     }
 
     return (
-        <div className='admin'>
+        <div className='user'>
             {isLogedIn &&
                 <>
-                    <div className='admin__header'>
+                    <div className='user__header'>
                         <Button
                             type="primary" danger
                             onClick={goBack}
@@ -35,27 +33,7 @@ function AdminPage() {
                         />
                         <h1>Porfolio Editing</h1>
                     </div>
-                    <Tabs
-                        defaultActiveKey="1"
-                        destroyInactiveTabPane='true'
-                        items={[
-                            {
-                                label: 'Project Info',
-                                key: '1',
-                                children: <ProjectEdit />,
-                            },
-                            {
-                                label: 'Blog Editor',
-                                key: '2',
-                                children: <BlogEdit />,
-                            },
-                            {
-                                label: 'Blog Request',
-                                key: '3',
-                                children: <RequestEdit />,
-                            },
-                        ]}
-                    />
+                    <BlogEdit />
                 </>
             }
             {!isLogedIn &&
@@ -71,7 +49,7 @@ function AdminPage() {
                         loop
                         autoplay
                     />
-                    <div className='admin__backloginbtn'>
+                    <div className='user__backloginbtn'>
                         <Button
                             type="primary"
                             onClick={goLogin}
@@ -84,4 +62,4 @@ function AdminPage() {
     );
 }
 
-export default AdminPage;
+export default UserPage;

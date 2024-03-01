@@ -13,7 +13,7 @@ function NavBar() {
     const isHomePage = location.pathname === '/';
 
     function goToAdmin() {
-        navigateTo('/admin');
+        navigateTo('/login');
     }
 
     return (

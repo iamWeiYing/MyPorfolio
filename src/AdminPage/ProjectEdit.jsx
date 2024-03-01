@@ -141,22 +141,23 @@ function ProjectEdit() {
 
     return (
         <div>
-            <Button type="primary" onClick={() => handleAdd()} style={{ float: 'right' }}>
+            <Button className='nav-btn' type="primary" onClick={() => handleAdd()}>
                 Add New
             </Button>
             {loading ? (
                 <Spin size="large" />
             ) : (
                 <>
-                    <Table 
-                            dataSource={data}
-                            columns={columns}
-                            pagination={{ pageSize: 7, position: ['topRight'] }}
-                        />
+                    <Table
+                        dataSource={data}
+                        columns={columns}
+                        pagination={{ pageSize: 7, position: ['topCenter'] }}
+                    />
 
                     <Modal
                         title="Project"
                         open={editModalVisible}
+                        width='70vw'
                         onOk={handleSaveEdit}
                         onCancel={handleCancelEdit}
                     >

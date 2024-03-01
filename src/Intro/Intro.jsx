@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { Button } from 'antd'
+import { Button } from 'antd';
 import { Player } from '@lottiefiles/react-lottie-player';
 import './Intro.css';
 

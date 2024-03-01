@@ -9,7 +9,9 @@ import Project from './Project/Project';
 import Blog from './Blog/Blog';
 import Contact from './Contact/Contact'
 import AdminPage from './AdminPage/AdminPage';
+import UserPage from './UserPage/UserPage';
 import LoginPage from './LoginPage/LoginPage';
+import RegisterPage from './LoginPage/RegisterPage';
 import BlogPage from './BlogPage/BlogPage';
 
 function App() {
@@ -60,14 +62,17 @@ function App() {
                             </div>
                         </div>
                     } />
-                    <Route path="/admin" element={isLogedIn ? < AdminPage /> : <LoginPage />} />
+                    {/*<Route path="/admin" element={isLogedIn ? < AdminPage /> : <LoginPage />} />*/}
+                    <Route path="/admin" element={< AdminPage />} />
+                    <Route path="/user" element={< UserPage />} />
+                    <Route path="/login" element={< LoginPage />} />
+                    <Route path="/signup" element={< RegisterPage />} />
                     <Route path="/blog/:id" element={
                         <div>
                             <NavBar />
                             <BlogPage />
                         </div>
                     } />
-                    {/*<Route path="/login" element={<LoginPage />} />*/}
                 </Routes>
             </BrowserRouter>
         </ConfigProvider>

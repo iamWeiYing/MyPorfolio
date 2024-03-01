@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Select, Table, Spin, Modal, Typography } from 'antd';
+import { Form, Input, Button, Select, Table, Spin, Modal, Typography, notification } from 'antd';
 import dayjs from 'dayjs';
 import axios from 'axios';
-import { QuillEditor } from './QuillEditor';
-import './AdminPage.css';
+import { CheckOutlined } from '@ant-design/icons';
+import { QuillEditor } from '../AdminPage/QuillEditor';
+import './UserPage.css';
 
 const { Option } = Select;
 const { Text } = Typography;
-const baseURL = 'https://65ae210d1dfbae409a74037a.mockapi.io/blog-web/Post';
+const baseURL = 'https://65ae210d1dfbae409a74037a.mockapi.io/blog-web/';
 
 function BlogEdit() {
 
@@ -75,11 +76,30 @@ function BlogEdit() {
                 <span>
                     <a href="#" onClick={() => handleEdit(record)}>Edit</a>
                     <span style={{ margin: '0 8px' }}>|</span>
-                    <a href="#" onClick={() => handleDelete(record.id)}>Delete</a>
+                    <a href="#" onClick={() => handleDelete(record)}>Delete</a>
                 </span>
             ),
         },
     ];
+
+    const [api, contextHolder] = notification.useNotification();
+    const notiRequest = () => {
+        api.open({
+            message: 'Send request success!',
+            description: 'Admin will approve your request soon.',
+            icon: <CheckOutlined style={{ color: '#00ff00' }} />,
+            duration: 2.5,
+        });
+    };
+
+    const notiWrong = () => {
+        api.open({
+            message: 'Send request error!',
+            description: 'Something wrong.',
+            icon: <CheckOutlined style={{ color: '#ff0000' }} />,
+            duration: 2.5,
+        });
+    };
 
     const [form] = Form.useForm();
     const userdata = JSON.parse(localStorage.getItem("userdata"));
@@ -90,7 +110,7 @@ function BlogEdit() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(baseURL);
+                const response = await axios.get(baseURL + 'Post');
                 setData(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -116,16 +136,32 @@ function BlogEdit() {
         setEditModalVisible(false);
     };
 
-    const handleDelete = async (id) => {
-        try {
-            // Implement your API endpoint for deleting data
-            await axios.delete(baseURL + `/${id}`);
-
-            // Update the local state by removing the deleted item
-            setData((prevData) => prevData.filter((item) => item.id !== id));
-        } catch (error) {
-            console.error('Error deleting data:', error);
-        }
+    const handleDelete = async (values) => {
+        const newPost = {
+            title: values.title,
+            subTitle: values.subTitle,
+            shortDescription: values.shortDescription,
+            content: values.content,
+            status: values.status,
+            createdAt: dayjs(),
+            createdBy: userdata.name,
+            updatedAt: '',
+            updatedBy: '',
+            PostId: values.id,
+            requestType: 'delete',
+        };
+        const handleNewData = async () => {
+            try {
+                let response;
+                response = await axios.post(baseURL + 'Request', newPost);
+                console.log('Form values:', response.data);
+                notiRequest();
+            } catch (error) {
+                console.error('Error updating data:', error);
+                notiWrong();
+            }
+        };
+        handleNewData();
     };
 
     const handleSaveEdit = (values) => {
@@ -136,41 +172,31 @@ function BlogEdit() {
             content: values.content,
             status: values.status || 'Private',
             updatedAt: '',
-            updatedBy: ''
+            updatedBy: '',
+            PostId: null,
         };
-        if (values && values.id) { newPost.updatedAt = dayjs(); newPost.updatedBy = userdata.name }
+        if (values && values.id) {
+            newPost.createdAt = values.createdAt;
+            newPost.createdBy = values.createdBy;
+            newPost.updatedAt = dayjs();
+            newPost.updatedBy = userdata.name;
+            newPost.PostId = values.id;
+            newPost.requestType = 'update';
+        }
         else {
             newPost.createdAt = dayjs();
             newPost.createdBy = userdata.name;
+            newPost.requestType = 'add';
         }
         const handleNewData = async () => {
             try {
                 let response;
-                if (values && values.id) {
-                    // If editedData has an ID, it's an existing object, so update it
-                    response = await axios.put(baseURL + `/${values.id}`, newPost);
-                } else {
-                    // If editedData does not have an ID, it's a new object, so add it
-
-                    response = await axios.post(baseURL, newPost);
-                }
+                response = await axios.post(baseURL + 'Request', newPost);
                 console.log('Form values:', response.data);
-
-                const updatedData = response.data;
-
-                if (values && values.id) {
-                    // If it's an existing object, update the local state
-                    setData((prevData) =>
-                        prevData.map((item) =>
-                            item.id === updatedData.id ? { ...item, ...updatedData } : item
-                        )
-                    );
-                } else {
-                    // If it's a new object, add it to the local state
-                    setData((prevData) => [...prevData, updatedData]);
-                }
+                notiRequest();
             } catch (error) {
                 console.error('Error updating data:', error);
+                notiWrong();
             }
         };
         handleNewData();
@@ -179,6 +205,7 @@ function BlogEdit() {
 
     return (
         <div>
+            {contextHolder}
             <Button className='nav-btn' type="primary" onClick={() => handleAdd()}>
                 Add New
             </Button>
@@ -209,6 +236,20 @@ function BlogEdit() {
                             <Form.Item
                                 label="ID"
                                 name="id"
+                                style={{ display: 'none' }}
+                            >
+                                <Input type="text" />
+                            </Form.Item>
+                            <Form.Item
+                                label="createdAt"
+                                name="createdAt"
+                                style={{ display: 'none' }}
+                            >
+                                <Input type="text" />
+                            </Form.Item>
+                            <Form.Item
+                                label="createdBy"
+                                name="createdBy"
                                 style={{ display: 'none' }}
                             >
                                 <Input type="text" />

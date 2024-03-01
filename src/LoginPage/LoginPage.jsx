@@ -5,7 +5,7 @@ import { Form, Input, Button, Divider, notification } from 'antd';
 import { UserOutlined, LockOutlined, CloseOutlined } from '@ant-design/icons';
 import './LoginPage.css';
 
-const baseURL = 'https://65ba06cab4d53c066551dc36.mockapi.io/project-data/user'
+const baseURL = 'https://65ba06cab4d53c066551dc36.mockapi.io/project-data/user';
 
 export default function LoginPage() {
 
@@ -19,6 +19,7 @@ export default function LoginPage() {
     const notifiWrong = () => {
         api.open({
             message: 'Login failed!',
+            description: 'Username or password is not correct!',
             icon: <CloseOutlined style={{ color: '#ff0000' }} />,
             duration: 2.5,
         });
@@ -57,8 +58,11 @@ export default function LoginPage() {
     const handleLogin = () => {
         if (checkObjectExistence(username, password)) {
             console.log('Login success');
+            const userdata = users.find((obj) => obj.username === username);
+            localStorage.setItem('userdata', JSON.stringify(userdata));
             localStorage.setItem('isLogedIn', true);
-            location.reload();
+            if (userdata.account_type === 'admin') navigateTo('/admin');
+            else navigateTo('/user')
         }
         else {
             console.error('Login failed');
@@ -74,10 +78,11 @@ export default function LoginPage() {
                 className='btn__back'
                 type="primary" danger
                 onClick={goBack}
-                icon={<CloseOutlined /> }
+                icon={<CloseOutlined />}
             />
             <Form
                 className='login__form'
+                onFinish={handleLogin}
                 initialValues={{
                     remember: true,
                 }}
@@ -120,13 +125,15 @@ export default function LoginPage() {
                 <Divider />
 
                 <Form.Item>
-                    <Button
-                        type="primary"
-                        htmlType="submit"
-                        onClick={handleLogin}
-                    >
-                        Log in
-                    </Button>
+                    <div className='btn__login'>
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                        >
+                            Log in
+                        </Button>
+                    </div>
+                    <p>Or <a href="/signup">register now!</a><p></p></p>
                 </Form.Item>
             </Form>
             <Outlet />

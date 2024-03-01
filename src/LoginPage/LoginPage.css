@@ -1,5 +1,5 @@
 .login {
-    height: 100vh;
+    min-height: 100vh;
     background-color: rgb(0, 0, 0, 0.8);
 }
 
@@ -21,9 +21,11 @@
     border-style: solid;
     border-width: 3px;
     border-color: aqua;
-    background-color: black;
+    background-color: rgba(20, 20, 20, 0.5);
 }
 
-.login__form button {
-    width: 100%;
-}
+    .login__form .btn__login {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
