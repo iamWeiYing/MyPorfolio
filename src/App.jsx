@@ -14,8 +14,10 @@ import LoginPage from './LoginPage/LoginPage';
 import RegisterPage from './LoginPage/RegisterPage';
 import BlogPage from './BlogPage/BlogPage';
 
+import Constants from './Constant';
+
 function App() {
-    const isLogedIn = JSON.parse(localStorage.getItem('isLogedIn'));
+    Constants.isLogedIn = false;
 
     return (
         <ConfigProvider

@@ -5,10 +5,9 @@
 }
 
     .user .player {
-        min-height: 400px;
-        min-width: 400px;
-        height: 50vh;
-        width: 50vw;
+        height: 60vh;
+        width: 80vw;
+        min-width: 200px;
     }
 
     .user .nav-btn {

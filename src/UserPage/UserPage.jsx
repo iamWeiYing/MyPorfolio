@@ -5,15 +5,15 @@ import { LogoutOutlined } from '@ant-design/icons';
 import { Player } from '@lottiefiles/react-lottie-player';
 
 import './UserPage.css';
+import Constants from '../Constant';
 import BlogEdit from './BlogEdit';
 
 function UserPage() {
 
     const navigateTo = useNavigate();
-    const isLogedIn = JSON.parse(localStorage.getItem('isLogedIn'));
 
     function goBack() {
-        localStorage.setItem('isLogedIn', false);
+        Constants.isLogedIn = false;
         navigateTo('/');
     }
 
@@ -23,7 +23,7 @@ function UserPage() {
 
     return (
         <div className='user'>
-            {isLogedIn &&
+            {Constants.isLogedIn &&
                 <>
                     <div className='user__header'>
                         <Button
@@ -36,7 +36,7 @@ function UserPage() {
                     <BlogEdit />
                 </>
             }
-            {!isLogedIn &&
+            {!Constants.isLogedIn &&
                 <>
                     <Button
                         type="primary" danger

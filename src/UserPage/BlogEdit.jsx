@@ -6,6 +6,7 @@ import { CheckOutlined } from '@ant-design/icons';
 import { QuillEditor } from '../AdminPage/QuillEditor';
 import './UserPage.css';
 
+import Constants from '../Constant';
 const { Option } = Select;
 const { Text } = Typography;
 const baseURL = 'https://65ae210d1dfbae409a74037a.mockapi.io/blog-web/';
@@ -102,7 +103,7 @@ function BlogEdit() {
     };
 
     const [form] = Form.useForm();
-    const userdata = JSON.parse(localStorage.getItem("userdata"));
+    const userdata = Constants.userdata;
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [editModalVisible, setEditModalVisible] = useState(false);

@@ -5,6 +5,7 @@ import { LogoutOutlined } from '@ant-design/icons';
 import { Player } from '@lottiefiles/react-lottie-player';
 
 import './AdminPage.css';
+import Constants from '../Constant';
 import ProjectEdit from './ProjectEdit.jsx';
 import BlogEdit from './BlogEdit';
 import RequestEdit from './RequestEdit';
@@ -12,10 +13,9 @@ import RequestEdit from './RequestEdit';
 function AdminPage() {
 
     const navigateTo = useNavigate();
-    const isLogedIn = JSON.parse(localStorage.getItem('isLogedIn'));
 
     function goBack() {
-        localStorage.setItem('isLogedIn', false);
+        Constants.isLogedIn = false;
         navigateTo('/');
     }
 
@@ -25,7 +25,7 @@ function AdminPage() {
 
     return (
         <div className='admin'>
-            {isLogedIn &&
+            {Constants.isLogedIn &&
                 <>
                     <div className='admin__header'>
                         <Button
@@ -58,7 +58,7 @@ function AdminPage() {
                     />
                 </>
             }
-            {!isLogedIn &&
+            {!Constants.isLogedIn &&
                 <>
                     <Button
                         type="primary" danger
