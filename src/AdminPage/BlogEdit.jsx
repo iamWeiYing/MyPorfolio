@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Select, Table, Spin, Modal, Typography } from 'antd';
 import dayjs from 'dayjs';
 import axios from 'axios';
-import { CheckCircleOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { QuillEditor } from './QuillEditor';
 import './AdminPage.css';
 
@@ -96,7 +96,7 @@ function BlogEdit() {
         modal.confirm({
             title: 'Confirm',
             centered: true,
-            icon: <CheckCircleOutlined style={{ color: '#00ff00' }} />,
+            icon: <ExclamationCircleOutlined style={{ color: '#ff0000' }} />,
             content: 'Do you want to delete this blog?',
             onOk: () => { handleDelete(id) },
         })

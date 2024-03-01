@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, Tabs, Select, Table, Spin, Modal, Typography } from 'antd';
 import dayjs from 'dayjs';
 import axios from 'axios';
-import { CheckCircleOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import './AdminPage.css';
 
 const { Text } = Typography;
@@ -121,7 +121,7 @@ function RequestEdit() {
         modal.confirm({
             title: 'Confirm',
             centered: true,
-            icon: <CheckCircleOutlined style={{ color: '#00ff00' }} />,
+            icon: <ExclamationCircleOutlined style={{ color: '#ff0000' }} />,
             content: 'Do you want to delete this request?',
             onOk: () => { handleDeleteRequest(id) },
         })

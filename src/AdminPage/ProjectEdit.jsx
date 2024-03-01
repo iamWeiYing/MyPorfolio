@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Spin, Modal, Form, Input, Button } from 'antd';
 import axios from 'axios';
-import { CheckCircleOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import './AdminPage.css';
 const { TextArea } = Input;
 
@@ -51,7 +51,7 @@ function ProjectEdit() {
         modal.confirm({
             title: 'Confirm',
             centered: true,
-            icon: <CheckCircleOutlined style={{ color: '#00ff00' }} />,
+            icon: <ExclamationCircleOutlined style={{ color: '#ff0000' }} />,
             content: 'Do you want to delete this project?',
             onOk: () => { handleDelete(id) },
         })
