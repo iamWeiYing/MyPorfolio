@@ -178,8 +178,8 @@ function ProjectEdit() {
                     <Modal
                         title="Project"
                         open={editModalVisible}
-                            width='70vw'
-                            onOk={confirmAction}
+                        width='70vw'
+                        onOk={confirmAction}
                         onCancel={handleCancelEdit}
                     >
                         <Form

@@ -5,15 +5,17 @@ import { LogoutOutlined } from '@ant-design/icons';
 import { Player } from '@lottiefiles/react-lottie-player';
 
 import './UserPage.css';
-import Constants from '../Constant';
+import UserInfoEdit from './UserInfoEdit';
 import BlogEdit from './BlogEdit';
 
 function UserPage() {
+    const userdata = JSON.parse(localStorage.getItem('userdata'));
+    const isLogedIn = JSON.parse(localStorage.getItem('isLogedIn'));
 
     const navigateTo = useNavigate();
 
     function goBack() {
-        Constants.isLogedIn = false;
+        localStorage.setItem('isLogedIn', JSON.stringify(false));
         navigateTo('/');
     }
 
@@ -23,20 +25,36 @@ function UserPage() {
 
     return (
         <div className='user'>
-            {Constants.isLogedIn &&
+            {console.log(userdata)}
+            {isLogedIn &&
                 <>
                     <div className='user__header'>
                         <Button
                             type="primary" danger
                             onClick={goBack}
                             icon={<LogoutOutlined />}
-                        />
-                        <h1>Porfolio Editing</h1>
+                    />
+                    <h1>{'Welcome ' + userdata.name + '!'}</h1>
                     </div>
-                    <BlogEdit />
+                    <Tabs
+                        defaultActiveKey="1"
+                        destroyInactiveTabPane='true'
+                        items={[
+                            {
+                                label: 'Your Infomation',
+                                key: '1',
+                                children: <UserInfoEdit />,
+                            },
+                            {
+                                label: 'Blog Editor',
+                                key: '2',
+                                children: <BlogEdit />,
+                            },
+                        ]}
+                    />
                 </>
             }
-            {!Constants.isLogedIn &&
+            {!isLogedIn &&
                 <>
                     <Button
                         type="primary" danger

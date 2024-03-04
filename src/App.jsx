@@ -14,10 +14,10 @@ import LoginPage from './LoginPage/LoginPage';
 import RegisterPage from './LoginPage/RegisterPage';
 import BlogPage from './BlogPage/BlogPage';
 
-import Constants from './Constant';
 
 function App() {
-    Constants.isLogedIn = false;
+    if (window.location.pathname === "/")
+        localStorage.setItem('isLogedIn', JSON.stringify(false));
 
     return (
         <ConfigProvider

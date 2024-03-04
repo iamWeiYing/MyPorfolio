@@ -5,11 +5,10 @@ import { Form, Input, Button, Divider, notification } from 'antd';
 import { UserOutlined, LockOutlined, CloseOutlined } from '@ant-design/icons';
 import './LoginPage.css';
 
-import Constants from '../Constant';
 const baseURL = 'https://65ba06cab4d53c066551dc36.mockapi.io/project-data/user'
 
 function RegisterPage() {
-    Constants.isLogedIn = false;
+    localStorage.setItem('isLogedIn', JSON.stringify(false));
     const navigateTo = useNavigate();
     function goBack() {
         navigateTo('/');
@@ -62,8 +61,8 @@ function RegisterPage() {
 
             // Handle successful login, e.g., store the token in local storage
             console.log('Sign up successful!', response.data);
-            Constants.userdata = response.data;
-            Constants.isLogedIn = true;
+            localStorage.setItem('userdata', JSON.stringify(response.data));
+            localStorage.setItem('isLogedIn', JSON.stringify(true));
             if (response.data.account_type === 'admin') navigateTo('/admin');
             else navigateTo('/user')
         } catch (error) {
